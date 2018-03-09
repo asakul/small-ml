@@ -1,9 +1,12 @@
 
 module ML.Unsupervised.GMM (
   fit,
+  GMM(..),
+  GMMComponent(..),
   FitOptions(..),
   defaultOptions,
-  predict
+  predict,
+  empty
 ) where
 
 import Numeric.LinearAlgebra
@@ -24,6 +27,9 @@ data GMMComponent a = GMMComponent {
 data GMM a = GMM {
   mixtureComponents :: [GMMComponent a]
 } deriving (Show)
+
+empty :: GMM a
+empty = GMM { mixtureComponents = [] }
 
 normalPdf :: V.Vector Double -> Matrix Double -> V.Vector Double -> Double
 normalPdf mu sigma x = (1 / sqrt (2 * pi * det sigma)) * exp (-0.5 * (x - mu) <.> ((inv sigma) #> (x - mu)))
