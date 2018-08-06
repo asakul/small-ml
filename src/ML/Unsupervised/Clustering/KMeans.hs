@@ -24,7 +24,7 @@ fit labels points = fit' (KMeans initialCentroids)
     fit' kmeans = let
                     ass = assignment kmeans
                     updatedKmeans = update kmeans ass in
-                    if assignment updatedKmeans == ass
+                    if (trace ("updated assignment: " ++ show (assignment updatedKmeans)) assignment updatedKmeans) == ass
                       then updatedKmeans
                       else fit' updatedKmeans
     update kmeans ass = KMeans $ zip labels $ fmap (\l -> centerOfMass $ snd <$> filter (\x -> fst x == l) ass) labels

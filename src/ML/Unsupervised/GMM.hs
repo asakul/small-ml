@@ -59,7 +59,7 @@ fit options nComponents points = fit' (GMM initialComponents) 0
     fit' gmm itnum = let updatedGmm = update gmm in
                 if (abs (likelihood updatedGmm points / likelihood gmm points - 1) < foLikelihoodConvergenceRatio options) || (itnum >= foMaxIterations options)
                   then gmm
-                  else fit' updatedGmm (itnum + 1)
+                  else fit' updatedGmm (trace ("fit' " ++ show itnum) itnum + 1)
 
     calculateResponsibility gmm comp = zipWith (/) (fmap (respNumerator comp) points) (fmap (respDenominator gmm) points)
 
